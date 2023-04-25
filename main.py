@@ -1,35 +1,59 @@
 import random
 
-    # es tiren dos daus de 6 cares. Si A LA PRIMERA TIRADA sumen 7 o 11, el jugador guanya directament.
-    # si A LA PRIMERA TIRADA dona 2, 3 o 12, perd directament.
-    # else: es tira un segon cop. Si la suma primera+segona tirada és >= 15, guanya. Si no, perd.
-guanyes = [7, 11] # Si és una constant, millor en majúscules (conveni), i millor una tupla que una llista.
-perds = [2,3,12]
+GUANYES = (7, 11)
+PERDS = (2,3,12)
 
 def tirarDaus():
     dau1 = random.randrange(1,6)
     dau2 = random.randrange(1,6)
+
     return dau1 + dau2
 
-def Comprovar(func): # millor "tirada" o similar que "func" pel nom de la variable
-    if func in guanyes:
-        print(func)
-        return print("G") # print no retorna res, així que aquesta funció tampoc. Hauries d'imprimir per una banda, i després fer el return "G"
 
-    elif func in perds:
-        print(func)        
-        return print("P")
+def Comprovar(tirada):
+   
+    if tirada in GUANYES:
+        return "G"
+
+    elif tirada in PERDS:       
+        return "P"
+    
     else:
-        SeguirJugant(func) # tal com està redactat l'enunciat, aquí s'hauria de retornar "T", i s'hauria de cridar a SeguirJugant des de fora.
+        return "T"
         
 
-def SeguirJugant(primera_tirada):
-    
-    print("T")
+def SeguirJugant(tirada):
 
-    if primera_tirada + tirarDaus() >= 15:
+    if tirada + tirarDaus() >= 15:
         return "G"
+    
     else:
         return "P"
 
-Comprovar(tirarDaus())
+game_runs = ""
+
+while game_runs != "no":
+
+    primera_tirada = tirarDaus() # ho faig així perquè penso que igual em farà falta tenir el primer resultat stored de cara a SeguirJugant()
+
+    if Comprovar(primera_tirada) == "G":
+        print(f"oye, a la primera tirada has tret un {primera_tirada}. Vaya crack, ojalá tot tan fàcil, eh?")
+
+    elif Comprovar(primera_tirada) == "P":
+        print(f"pos res, has tret un {primera_tirada}. No et vull desmotivar, però quin fracàs.")
+
+    else:
+        print(f"goita! Com has tret un {primera_tirada} tens dret a tornar a tirar. #totaniràbé")
+        input("(tornes a tirar els daus. Apreta qualsevol tecla per veure qué ha pasao.)")
+        
+        SeguirJugant(primera_tirada) # no estic segura de si hauria d'store això en una variable. Maybe?
+
+        if SeguirJugant(primera_tirada) == "G":
+            print("a la segona va la vencida! Sempre entenia BALA VENCIDA de peque, whatever that means.")
+        else:
+            print("ni amb una segona tirada. Què pringui. No me llames más.")
+            
+    game_runs = input("vols tornar a jugar, AMOR MÍO?\n\n\t(\"no\" per sortir d'aquest dice hell)\n")
+
+    if game_runs == "no":
+        break
