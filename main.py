@@ -46,6 +46,13 @@ while game_runs != "no":
         print(f"goita! Com has tret un {primera_tirada} tens dret a tornar a tirar. #totaniràbé")
         input("(tornes a tirar els daus. Apreta qualsevol tecla per veure qué ha pasao.)")
         
+        # Cada cop que crides a SeguirJugant es genera una tirada de daus nova, així que hauries de cridar-la
+        # només una vegada per partida.
+        # Una de dues, o guardes el resultat a una variable:
+        # resultat = SeguirJugant(primera_tirada)
+        # if resultat == "G":
+        # ...
+        # o crides la funció directament a l'if, i elimines aquesta línia que no està fent res útil.
         SeguirJugant(primera_tirada) # no estic segura de si hauria d'store això en una variable. Maybe?
 
         if SeguirJugant(primera_tirada) == "G":
@@ -55,5 +62,6 @@ while game_runs != "no":
             
     game_runs = input("vols tornar a jugar, AMOR MÍO?\n\n\t(\"no\" per sortir d'aquest dice hell)\n")
 
+    # Aquest break, a part de ser mala praxis, no fa res. Quan game_runs sigui null, ja sortirà com a resultat de la condició del while.
     if game_runs == "no":
         break
